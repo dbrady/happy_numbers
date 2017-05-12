@@ -52,14 +52,30 @@ defmodule HappyNumbers do
   haven't seen this new number yet, we pass in the collection with the new
   number appended and carry on.
   """
-  def happy?(1), do: true
-  def happy?(42), do: false
 
   def happy?(num) do
+    # IO.puts '--------------------'
+    # IO.puts num
+    happy? num, []
+  end
+
+  def happy?(1, _), do: true
+
+  def happy?(num, list) do
+    # IO.puts "Checking #{num} against #{inspect(list)}"
+    if Enum.member?(list, num) do
+      # IO.puts "#{num} is a member of #{inspect(list)}"
+      false
+    else
+      new_num = next_num(num)
+      happy?(new_num, list ++ [num])
+    end
+  end
+
+  def next_num(num) do
     Integer.digits(num)
       |> Enum.map( fn x -> :math.pow(x,2) end)
       |> Enum.sum
       |> round
-      |> happy?
   end
 end
