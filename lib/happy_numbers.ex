@@ -61,14 +61,17 @@ defmodule HappyNumbers do
 
   def happy?(1, _), do: true
 
+  # It would be so cool if we could say
+  # def happy?(num, list) when Enum.member?(list, num), do: false
+  # BUT, this is me learning that you can't just put any old function in a guard
+
   def happy?(num, list) do
     # IO.puts "Checking #{num} against #{inspect(list)}"
     if Enum.member?(list, num) do
       # IO.puts "#{num} is a member of #{inspect(list)}"
       false
     else
-      new_num = next_num(num)
-      happy?(new_num, list ++ [num])
+      happy?(next_num(num), list ++ [num])
     end
   end
 
